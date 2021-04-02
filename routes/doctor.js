@@ -8,10 +8,10 @@ router.get("/", async function (req, res) {
   res.render("doctor", { doctors: doctors });
 });
 
-router.get("/edit/:id", function (req, res) {
+router.get("/edit/:id", async function (req, res) {
   const doctorId = req.params.id;
-  const doctor = doctorModel.getDoctorById(doctorId);
-  res.render("doctor/edit", { doctor: doctor });
+  const doctor = await doctorModel.getDoctorById(doctorId);
+  res.render("doctor/edit", { doctor: doctor[0] });
 });
 
 router.post("/", async function (req, res) {
@@ -23,15 +23,13 @@ router.post("/", async function (req, res) {
 
 router.put("/", async function (req, res) {
   const doctor = req.body;
-
   await doctorModel.updateDoctor(doctor);
   res.redirect("/doctor");
 });
 
-router.delete("/", function (req, res) {
+router.delete("/", async function (req, res) {
   const doctor = req.body;
-
-  doctorModel.removeDoctor(doctor.id);
+  await doctorModel.removeDoctor(doctor.id);
   res.redirect("/doctor");
 });
 

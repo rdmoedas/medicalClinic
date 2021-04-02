@@ -30,12 +30,9 @@ async function getDoctors() {
   return result;
 }
 
-function getDoctorById(doctorId) {
-  const index = doctors.findIndex((obj) => {
-    return parseInt(obj.id) === parseInt(doctorId);
-  });
-
-  return doctors[index];
+async function getDoctorById(doctorId) {
+  const index = await db.query(`SELECT * FROM doctor WHERE id = ${doctorId} ;`, { type: Sequelize.QueryTypes.SELECT })
+  return index;
 }
 
 async function insertDoctor(doctor) {
@@ -57,26 +54,10 @@ async function updateDoctor(doctor) {
       id: doctor.id
     }
   })
-
-
-
-  
-  
-  
-  
-  // const index = doctors.findIndex((obj) => {
-  //   return parseInt(obj.id) === parseInt(doctor.id);
-  // });
-
-  // doctors[index] = doctor;
-
-  // return doctors[index];
 }
 
-function removeDoctor(doctorId) {
-  doctors = doctors.filter(
-    (doctor) => parseInt(doctor.id) !== parseInt(doctorId)
-  );
+async function removeDoctor(doctorId) {
+  await db.query(`DELETE FROM doctor WHERE id = ${doctorId};`, { type: Sequelize.QueryTypes.DELETE });
 }
 
 module.exports = {
