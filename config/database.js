@@ -1,7 +1,7 @@
 const config = {
   username: "root",
   password: "",
-  database: "convenio_medico",
+  database: "acme_clinic_db01",
   host: "localhost",
   dialect: "mysql",
 };

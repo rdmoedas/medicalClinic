@@ -3,8 +3,8 @@ const doctorModel = require("../models/doctor");
 
 const router = express.Router();
 
-router.get("/", function (req, res) {
-  const doctors = doctorModel.getDoctors();
+router.get("/", async function (req, res) {
+  const doctors = await doctorModel.getDoctors();
   res.render("doctor", { doctors: doctors });
 });
 
@@ -14,17 +14,17 @@ router.get("/edit/:id", function (req, res) {
   res.render("doctor/edit", { doctor: doctor });
 });
 
-router.post("/", function (req, res) {
+router.post("/", async function (req, res) {
   const doctor = req.body;
-  doctor.id = parseInt(Math.random() * 100);
-  doctorModel.insertDoctor(doctor);
+  // doctor.id = parseInt(Math.random() * 100);
+  await doctorModel.insertDoctor(doctor);
   res.redirect("/doctor");
 });
 
-router.put("/", function (req, res) {
+router.put("/", async function (req, res) {
   const doctor = req.body;
 
-  doctorModel.updateDoctor(doctor);
+  await doctorModel.updateDoctor(doctor);
   res.redirect("/doctor");
 });
 
