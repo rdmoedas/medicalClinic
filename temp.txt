@@ -1,0 +1,24 @@
+SQL utilizados para criar as tabelas
+
+/*CREATE TABLE doctor (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    name varchar(255) NOT NULL,
+    crm	varchar(10) NOT NULL,
+    document varchar(14) NOT NULL
+);
+*/
+/*
+INSERT INTO doctor (name, crm, document) VALUES ('Vitor José', 'SP-3030', '456.038.444.8');
+INSERT INTO doctor (name, crm, document) VALUES ('Carlos Sanchez', 'SP-3031', '456.038.456.9');
+INSERT INTO doctor (name, crm, document) VALUES ('Marcela Costa', 'SP-3032', '456.038.202.5');
+*/
+
+/*
+CREATE TABLE patient (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    birth_date DATE,
+    document VARCHAR(14) NOT NULL,
+    gender CHAR(1) NOT NULL
+);
+*/
