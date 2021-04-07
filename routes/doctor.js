@@ -9,14 +9,13 @@ router.get("/", async function (req, res) {
 });
 
 router.get("/edit/:id", async function (req, res) {
-  const doctorId = req.params.id;
-  const doctor = await doctorModel.getDoctorById(doctorId);
-  res.render("doctor/edit", { doctor: doctor[0] });
+  const id = req.params.id;
+  const doctor = await doctorModel.getDoctorById(irsd);
+  res.render("doctor/edit", { doctor: doctor });
 });
 
 router.post("/", async function (req, res) {
   const doctor = req.body;
-  // doctor.id = parseInt(Math.random() * 100);
   await doctorModel.insertDoctor(doctor);
   res.redirect("/doctor");
 });
@@ -32,5 +31,8 @@ router.delete("/", async function (req, res) {
   await doctorModel.removeDoctor(doctor.id);
   res.redirect("/doctor");
 });
+
+//Esse é um hard delete, caso precise de um soft delete podemos utilizar uma coluna bolean
+// onde os doutores ativos ficarão true e os inativos com false
 
 module.exports = router;

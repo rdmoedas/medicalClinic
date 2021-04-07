@@ -26,13 +26,17 @@ let doctors = [
 
 async function getDoctors() {
   const result = await db.query('SELECT * FROM doctor;', { type: Sequelize.QueryTypes.SELECT })
-  //console.log(result)
   return result;
 }
 
-async function getDoctorById(doctorId) {
-  const index = await db.query(`SELECT * FROM doctor WHERE id = ${doctorId} ;`, { type: Sequelize.QueryTypes.SELECT })
-  return index;
+async function getDoctorById(id) {
+  const index = await db.query('SELECT * FROM doctor WHERE id = :doctorId ;', { 
+    type: Sequelize.QueryTypes.SELECT,
+    replacements: {
+      doctorId: id
+    }
+  })
+  return index[0];
 }
 
 async function insertDoctor(doctor) {
@@ -57,7 +61,12 @@ async function updateDoctor(doctor) {
 }
 
 async function removeDoctor(doctorId) {
-  await db.query(`DELETE FROM doctor WHERE id = ${doctorId};`, { type: Sequelize.QueryTypes.DELETE });
+  await db.query('DELETE FROM doctor WHERE id = :doctorId', { 
+    type: Sequelize.QueryTypes.DELETE,
+    replacements: {
+      doctorId: doctorId
+    }
+  });
 }
 
 module.exports = {
