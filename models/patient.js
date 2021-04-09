@@ -1,3 +1,8 @@
+const Sequelize = require('sequelize');
+const config = require('../config/database');
+const db = new Sequelize(config);
+
+/*
 let patients = [
   {
     id: "1",
@@ -21,8 +26,24 @@ let patients = [
     gender: "F",
   },
 ];
+*/
 
-function getPatient() {
+async function getPatient(initialLetter) {
+  let searchQuery = "SELECT * FROM patient;";
+  
+  if (initialLetter !== undefined) {
+    searchQuery = "SELECT * FROM patient WHERE name LIKE :initialLetter";
+  }
+
+  const patients = await db.query(searchQuery, { 
+    type: Sequelize.QueryTypes.SELECT,
+    replacements: {
+      initialLetter: initialLetter + '%', // `${initialLetter}%`
+    }
+  });
+  
+
+  
   return patients;
 }
 
@@ -34,9 +55,15 @@ function getPatientById(patientId) {
   return patients[index];
 }
 
-function insertPatient(patient) {
-  patients.push(patient);
-  return patients;
+async function insertPatient(patient) {
+  await db.query("INSERT INTO patient (name, birth_date, document, gender) VALUES (:name, :birth_date, :document, :gender);", {
+    replacements: {
+      name: patient.name,
+      birth_date: patient.birth_date,
+      document: patient.document,
+      gender: patient.gender,
+    }
+  })
 }
 
 function updatePatient(patient) {
@@ -49,10 +76,17 @@ function updatePatient(patient) {
   return patients[index];
 }
 
-function removePatient(patientId) {
-  patients = patients.filter(
+async function removePatient(patientId) {
+  /*patients = patients.filter(
     (patient) => parseInt(patient.id) !== parseInt(patientId)
   );
+  */
+    await db.query('DELETE FROM patient WHERE id = :patientId;', {
+      type: Sequelize.QueryTypes.DELETE,
+      replacements: {
+        patientId: patientId,
+      }
+    })
 }
 
 module.exports = {

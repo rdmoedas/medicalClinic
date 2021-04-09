@@ -3,8 +3,9 @@ const patientModel = require("../models/patient");
 
 const router = express.Router();
 
-router.get("/", function (req, res) {
-  const patients = patientModel.getPatient();
+router.get("/", async function (req, res) {
+  const initialLetter = req.query.initialLetter;
+  const patients = await patientModel.getPatient(initialLetter);
   res.render("patient", { patients: patients });
 });
 
@@ -27,10 +28,10 @@ router.put("/", function (req, res) {
   res.redirect("/patient");
 });
 
-router.delete("/", function (req, res) {
+router.delete("/", async function (req, res) {
   const patient = req.body;
 
-  patientModel.removePatient(patient.id);
+  await patientModel.removePatient(patient.id);
   res.redirect("/patient");
 });
 
