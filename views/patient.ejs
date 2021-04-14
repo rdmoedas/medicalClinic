@@ -7,8 +7,150 @@
   <body>
     <%- include('partials/header') %>
 
-    <main>
-      patient
+    <main class="container">
+      <h1>Pacientes</h1>
+      <hr />
+      <section class="mt-3">
+        <h3>Pacientes cadastrados</h3>
+        <nav class="m-auto">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Todos</a></li>
+            <li class="page-item"><a class="page-link" href="?initialLetter=a">A</a></li>
+            <li class="page-item"><a class="page-link" href="?initialLetter=b">B</a></li>
+            <li class="page-item"><a class="page-link" href="?initialLetter=c">C</a></li>
+            <li class="page-item"><a class="page-link" href="?initialLetter=d">D</a></li>
+            <li class="page-item"><a class="page-link" href="#">E</a></li>
+            <li class="page-item"><a class="page-link" href="#">F</a></li>
+            <li class="page-item"><a class="page-link" href="#">G</a></li>
+            <li class="page-item"><a class="page-link" href="#">H</a></li>
+            <li class="page-item"><a class="page-link" href="#">I</a></li>
+            <li class="page-item"><a class="page-link" href="#">J</a></li>
+            <li class="page-item"><a class="page-link" href="#">K</a></li>
+            <li class="page-item"><a class="page-link" href="#">L</a></li>
+            <li class="page-item"><a class="page-link" href="#">M</a></li>
+            <li class="page-item"><a class="page-link" href="#">N</a></li>
+            <li class="page-item"><a class="page-link" href="#">P</a></li>
+            <li class="page-item"><a class="page-link" href="#">Q</a></li>
+            <li class="page-item"><a class="page-link" href="#">R</a></li>
+            <li class="page-item"><a class="page-link" href="#">S</a></li>
+            <li class="page-item"><a class="page-link" href="#">T</a></li>
+            <li class="page-item"><a class="page-link" href="#">U</a></li>
+            <li class="page-item"><a class="page-link" href="#">V</a></li>
+            <li class="page-item"><a class="page-link" href="#">X</a></li>
+            <li class="page-item"><a class="page-link" href="#">Y</a></li>
+            <li class="page-item"><a class="page-link" href="#">Z</a></li>
+          </ul>
+        </nav>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Documento</th>
+              <th scope="col">Dt. Nascimento</th>
+              <th scope="col">Genero</th>
+              <th scope="col">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% patients.forEach(function(patient) { %>
+            <tr>
+              <th scope="row"><%- patient.id %></th>
+              <td><%- patient.name %></td>
+              <td><%- patient.document %></td>
+              <td><%- patient.birth_date %></td>
+              <td><%- patient.gender %></td>
+              <td>
+                <div class="row">
+                  <div class="col-md-3">
+                    <a
+                      role="button"
+                      href="/patient/edit/<%-patient.id%>"
+                      class="btn btn-warning"
+                    >
+                      Editar
+                    </a>
+                  </div>
+                  <div class="col-md-3">
+                    <form method="POST" action="/patient?_method=DELETE">
+                      <input
+                        type="text"
+                        hidden
+                        name="id"
+                        value="<%-patient.id%>"
+                      />
+                      <button type="submit" class="btn btn-danger">
+                        Excluir
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <% });%>
+          </tbody>
+        </table>
+      </section>
+      <section class="mt-3">
+        <h3>Cadastro novo paciente</h3>
+        <form action="" method="post">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="name" class="form-label">Nome</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                  />
+                </div>
+                <div class="col-md-12">
+                  <label for="document" class="form-label"
+                    >Data de nascimento</label
+                  >
+                  <input
+                    class="form-control"
+                    type="date"
+                    id="birth_date"
+                    name="birth_date"
+                    required
+                  />
+                </div>
+                <div class="col-md-12">
+                  <label for="document" class="form-label">Documento</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="document"
+                    name="document"
+                    required
+                  />
+                </div>
+                <div class="col-md-12">
+                  <label for="gender" class="form-label">Genero</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="gender"
+                    name="gender"
+                    maxlength="1"
+                    required
+                  />
+                </div>
+                <div class="mt-1 d-flex justify-content-end">
+                  <button type="reset" class="btn btn-default">Cancelar</button>
+                  <button type="submit" class="btn btn-primary">
+                    Cadastrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
     </main>
 
     <!-- Bootstrap core JavaScript
